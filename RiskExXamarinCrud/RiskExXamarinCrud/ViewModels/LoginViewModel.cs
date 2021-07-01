@@ -8,14 +8,14 @@ namespace RiskExXamarinCrud.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        public Command LoginCommand { get; }
+        //public Command LoginCommand { get; }
 
         public LoginViewModel()
         {
-            LoginCommand = new Command(OnLoginClicked);
+            //LoginCommand = new Command(OnLoginSuccess);
         }
 
-        private async void OnLoginClicked(object obj)
+        public async void OnLoginSuccess()
         {
             // Prefixing with `//` switches to a different navigation stack instead of pushing to the active one
             //await Shell.Current.GoToAsync($"//{nameof(AboutPage)}");

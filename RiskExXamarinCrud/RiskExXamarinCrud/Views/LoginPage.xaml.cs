@@ -12,10 +12,34 @@ namespace RiskExXamarinCrud.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LoginPage : ContentPage
     {
+        const string USERNAME = "Admin";
+        const string PASSWORD = "123";
+
+        LoginViewModel viewModel;
+
         public LoginPage()
         {
             InitializeComponent();
-            this.BindingContext = new LoginViewModel();
+            BindingContext = viewModel = new LoginViewModel();
+        }
+
+        private void LoginClicked(object sender, EventArgs e)
+        {
+            bool LoginOk =
+                !String.IsNullOrWhiteSpace(Username.Text) &&
+                !String.IsNullOrWhiteSpace(Password.Text) &&
+                Username.Text.Equals(USERNAME) &&
+                Password.Text.Equals(PASSWORD);
+
+            if (LoginOk)
+            {
+                DisplayAlert("", "Congratulations!", "Ok");
+                viewModel.OnLoginSuccess();
+            }
+            else
+            {
+                DisplayAlert("", "Username/Password invalid", "Ok");
+            }
         }
     }
 }
