@@ -14,6 +14,15 @@ namespace RiskExXamarinCrud.ViewModels
         private string description;
         public string Id { get; set; }
 
+        //public Command SaveItemCommand { get; }
+        //public Command CancelItemCommand { get; }
+
+        public ItemDetailViewModel()
+        {
+            //SaveItemCommand = new Command(OnSaveItem);
+            //CancelItemCommand = new Command(OnCancelItem);
+        }
+
         public string Text
         {
             get => text;
@@ -53,5 +62,17 @@ namespace RiskExXamarinCrud.ViewModels
                 Debug.WriteLine("Failed to Load Item");
             }
         }
+
+        //private async void OnSaveItem(object obj)
+        //{
+        //    //await Shell.Current.GoToAsync(nameof(NewItemPage));
+        //    DisplayAlert("save option", "save was selected", "b1", "b2");
+        //}
+
+        //private async void OnCancelItem(object obj)
+        //{
+        //    //await Shell.Current.GoToAsync(nameof(NewItemPage));
+        //    DisplayAlert("cancel option", "cancel was selected", "b1", "b2");
+        //}
     }
 }
