@@ -11,5 +11,10 @@ namespace RiskExXamarinCrud.Views
         {
             InitializeComponent();
         }
+
+        private void EnterClicked(object sender, EventArgs eventArgs)
+        {
+            DisplayAlert("WELCOME 2", "XAMARIN", "b1", "b2");
+        }
     }
 }

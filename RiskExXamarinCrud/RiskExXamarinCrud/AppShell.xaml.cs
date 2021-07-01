@@ -13,6 +13,7 @@ namespace RiskExXamarinCrud
             InitializeComponent();
             Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
             Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
+            Routing.RegisterRoute(nameof(EditItemPage), typeof(EditItemPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

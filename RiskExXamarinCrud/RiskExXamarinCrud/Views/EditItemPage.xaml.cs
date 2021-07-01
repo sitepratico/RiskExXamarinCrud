@@ -8,15 +8,14 @@ using Xamarin.Forms.Xaml;
 
 namespace RiskExXamarinCrud.Views
 {
-    public partial class NewItemPage : ContentPage
+    public partial class EditItemPage : ContentPage
     {
-        //public List<string> Manufactures = new List<string>() { "VW", "FIAT", "CHEVROLET" };
         public CarItem Item { get; set; }
 
-        public NewItemPage()
+        public EditItemPage()
         {
             InitializeComponent();
-            BindingContext = new NewItemViewModel();
+            BindingContext = new EditItemViewModel();
         }
     }
 }

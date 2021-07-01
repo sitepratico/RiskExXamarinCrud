@@ -10,20 +10,20 @@ namespace RiskExXamarinCrud.ViewModels
 {
     public class ItemsViewModel : BaseViewModel
     {
-        private Item _selectedItem;
+        private CarItem _selectedItem;
 
-        public ObservableCollection<Item> Items { get; }
+        public ObservableCollection<CarItem> Items { get; }
         public Command LoadItemsCommand { get; }
         public Command AddItemCommand { get; }
-        public Command<Item> ItemTapped { get; }
+        public Command<CarItem> ItemTapped { get; }
 
         public ItemsViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Title = "Cars";
+            Items = new ObservableCollection<CarItem>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            ItemTapped = new Command<Item>(OnItemSelected);
+            ItemTapped = new Command<CarItem>(OnItemSelected);
 
             AddItemCommand = new Command(OnAddItem);
         }
@@ -35,7 +35,7 @@ namespace RiskExXamarinCrud.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await CarDataStore.GetCarsAsync(true);
                 foreach (var item in items)
                 {
                     Items.Add(item);
@@ -57,7 +57,7 @@ namespace RiskExXamarinCrud.ViewModels
             SelectedItem = null;
         }
 
-        public Item SelectedItem
+        public CarItem SelectedItem
         {
             get => _selectedItem;
             set
@@ -72,7 +72,7 @@ namespace RiskExXamarinCrud.ViewModels
             await Shell.Current.GoToAsync(nameof(NewItemPage));
         }
 
-        async void OnItemSelected(Item item)
+        async void OnItemSelected(CarItem item)
         {
             if (item == null)
                 return;

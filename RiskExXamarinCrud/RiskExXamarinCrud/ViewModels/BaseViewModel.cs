@@ -10,7 +10,8 @@ namespace RiskExXamarinCrud.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+        public ICarDataStore<CarItem> CarDataStore => DependencyService.Get<ICarDataStore<CarItem>>();
+        //public ICarDataStore<CarItem> CarDataStore => DependencyService.Get<ICarDataStore<CarItem>>() ?? new CarDataStore();
 
         bool isBusy = false;
         public bool IsBusy
@@ -44,8 +45,7 @@ namespace RiskExXamarinCrud.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             var changed = PropertyChanged;
-            if (changed == null)
-                return;
+            if (changed == null) return;
 
             changed.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

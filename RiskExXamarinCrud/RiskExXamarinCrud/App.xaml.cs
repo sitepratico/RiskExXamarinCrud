@@ -13,7 +13,7 @@ namespace RiskExXamarinCrud
         {
             InitializeComponent();
 
-            DependencyService.Register<MockDataStore>();
+            DependencyService.Register<CarDataStore>();
             MainPage = new AppShell();
         }
 

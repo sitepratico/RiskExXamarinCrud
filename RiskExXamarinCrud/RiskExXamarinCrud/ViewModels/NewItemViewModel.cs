@@ -1,7 +1,9 @@
 ﻿using RiskExXamarinCrud.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -9,37 +11,34 @@ namespace RiskExXamarinCrud.ViewModels
 {
     public class NewItemViewModel : BaseViewModel
     {
-        private string text;
-        private string description;
+        private string car;
+        private string manufacturer;
+        public Command SaveCommand { get; }
+        public Command CancelCommand { get; }
 
         public NewItemViewModel()
         {
             SaveCommand = new Command(OnSave, ValidateSave);
             CancelCommand = new Command(OnCancel);
-            this.PropertyChanged +=
-                (_, __) => SaveCommand.ChangeCanExecute();
+            this.PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
         }
 
         private bool ValidateSave()
         {
-            return !String.IsNullOrWhiteSpace(text)
-                && !String.IsNullOrWhiteSpace(description);
+            return !String.IsNullOrWhiteSpace(car) && !String.IsNullOrWhiteSpace(manufacturer);
         }
 
-        public string Text
+        public string Car
         {
-            get => text;
-            set => SetProperty(ref text, value);
+            get => car;
+            set => SetProperty(ref car, value);
         }
 
-        public string Description
+        public string Manufacturer
         {
-            get => description;
-            set => SetProperty(ref description, value);
+            get => manufacturer;
+            set => SetProperty(ref manufacturer, value);
         }
-
-        public Command SaveCommand { get; }
-        public Command CancelCommand { get; }
 
         private async void OnCancel()
         {
@@ -49,14 +48,14 @@ namespace RiskExXamarinCrud.ViewModels
 
         private async void OnSave()
         {
-            Item newItem = new Item()
+            CarItem newItem = new CarItem()
             {
                 Id = Guid.NewGuid().ToString(),
-                Text = Text,
-                Description = Description
+                Car = Car,
+                Manufacturer = Manufacturer
             };
 
-            await DataStore.AddItemAsync(newItem);
+            await CarDataStore.AddCarAsync(newItem);
 
             // This will pop the current page off the navigation stack
             await Shell.Current.GoToAsync("..");

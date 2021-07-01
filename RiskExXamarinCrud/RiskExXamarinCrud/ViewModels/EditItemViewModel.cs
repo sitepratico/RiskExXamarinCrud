@@ -8,30 +8,14 @@ using Xamarin.Forms;
 namespace RiskExXamarinCrud.ViewModels
 {
     [QueryProperty(nameof(ItemId), nameof(ItemId))]
-    public class ItemDetailViewModel : BaseViewModel
+    public class EditItemViewModel : BaseViewModel
     {
         private string itemId;
         private string car;
         private string manufacturer;
         public string Id { get; set; }
-
-        //private void EditClicked(object sender, EventArgs eventArgs)
-        //{
-        //    OnEditItem(itemId);
-        //}
-
-        public async void OnDeleteItem()
-        {
-            await CarDataStore.DeleteCarAsync(itemId);
-
-            // This will pop the current page off the navigation stack
-            await Shell.Current.GoToAsync("..");
-        }
-
-        public async void OnEditItem()
-        {
-            await Shell.Current.GoToAsync($"{nameof(EditItemPage)}?{nameof(EditItemViewModel.ItemId)}={itemId}");
-        }
+        public Command SaveCommand { get; }
+        public Command CancelCommand { get; }
 
         public string Car
         {
@@ -58,6 +42,18 @@ namespace RiskExXamarinCrud.ViewModels
             }
         }
 
+        public EditItemViewModel()
+        {
+            SaveCommand = new Command(OnSave, ValidateSave);
+            CancelCommand = new Command(OnCancel);
+            this.PropertyChanged += (_, __) => SaveCommand.ChangeCanExecute();
+        }
+
+        private bool ValidateSave()
+        {
+            return !String.IsNullOrWhiteSpace(car) && !String.IsNullOrWhiteSpace(manufacturer);
+        }
+
         public async void LoadItemId(string itemId)
         {
             try
@@ -73,16 +69,25 @@ namespace RiskExXamarinCrud.ViewModels
             }
         }
 
-        //private async void OnSaveItem(object obj)
-        //{
-        //    //await Shell.Current.GoToAsync(nameof(NewItemPage));
-        //    DisplayAlert("save option", "save was selected", "b1", "b2");
-        //}
+        private async void OnCancel()
+        {
+            // This will pop the current page off the navigation stack
+            await Shell.Current.GoToAsync("..");
+        }
 
-        //private async void OnCancelItem(object obj)
-        //{
-        //    //await Shell.Current.GoToAsync(nameof(NewItemPage));
-        //    DisplayAlert("cancel option", "cancel was selected", "b1", "b2");
-        //}
+        private async void OnSave()
+        {
+            CarItem editItem = new CarItem()
+            {
+                Id = ItemId,
+                Car = Car,
+                Manufacturer = Manufacturer
+            };
+
+            await CarDataStore.UpdateCarAsync(editItem);
+
+            // This will pop the current page off the navigation stack
+            await Shell.Current.GoToAsync("..");
+        }
     }
 }
